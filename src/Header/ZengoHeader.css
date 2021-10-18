@@ -1,0 +1,8 @@
+.zengo-header{
+    background-color: rgb(255, 255, 255);
+    display: flex;
+}
+
+.zengo-header-logo{
+    margin: 1rem auto 1rem 5rem;
+}
