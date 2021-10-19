@@ -1,12 +1,17 @@
+import { Provider } from 'react-redux';
 import './App.css';
-import ZengoHeader from './Header/ZengoHeader';
+import ZengoHeader from './Pages/Header/ZengoHeader';
+import StateRegistry from './Pages/StateRegistry/StateRegistry';
+import { store } from './Redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <ZengoHeader></ZengoHeader>
-
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <ZengoHeader></ZengoHeader>
+        <StateRegistry></StateRegistry>
+      </div>
+    </Provider>
   );
 }
 
