@@ -5,7 +5,6 @@ import SelectState from './SelectState/SelectState'
 import { StatesStateType } from '../../Redux/State/stateTypes'
 import AddNewCity from './AddCity/AddNewCity'
 import CityHandler from './CityHandler/CityHandler'
-import { useEffect, useState } from 'react'
 
 
 type StateRegistryProps = {
