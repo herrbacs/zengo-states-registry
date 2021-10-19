@@ -45,7 +45,7 @@ const AddNewCity = (props: any) => {
 
 const mapStateToProps = (state: any) => {
     return {
-        selectedState: state.states.selectedStateId
+        
     }
 }
 

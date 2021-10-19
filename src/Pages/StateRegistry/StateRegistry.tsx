@@ -5,11 +5,14 @@ import SelectState from './SelectState/SelectState'
 import { StatesStateType } from '../../Redux/State/stateTypes'
 import AddNewCity from './AddCity/AddNewCity'
 import CityHandler from './CityHandler/CityHandler'
+import { useEffect, useState } from 'react'
 
 
 type StateRegistryProps = {
     states: StatesStateType
 }
+
+
 
 const StateRegistry = ({ states }: StateRegistryProps) => {
     return (
@@ -17,13 +20,13 @@ const StateRegistry = ({ states }: StateRegistryProps) => {
             <div className="select-state-column">
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-top.png'} alt="" />
                 <SelectState />
-                {states.selectedStateId !== -1 && <AddNewCity selectedState={states.selectedStateId} />}
+                {states.selectedState && <AddNewCity selectedState={states.selectedState} />}
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-bottom.png'} alt="" />
             </div>
             <div className="selected-state-container">
-                {states.selectedStateId === -1 ?
+                {states.selectedState === null ?
                     <img className="no-selected-state-img" src={process.env.PUBLIC_URL + '/state-registry/zengo_no_selected_state.png'} alt="" />
-                    : <CityHandler></CityHandler>
+                    : <CityHandler selectedState={states.selectedState}></CityHandler>
                 }
             </div>
         </div>

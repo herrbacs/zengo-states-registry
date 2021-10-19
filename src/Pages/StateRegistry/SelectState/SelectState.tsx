@@ -13,10 +13,8 @@ type SelectStateProps = {
 const SelectState = ({states, fetchStates,setSelectedState}:SelectStateProps) => {
 
     const submitSelectedState = (e:React.ChangeEvent<HTMLSelectElement>) => {
-        
-        console.log(e.target.value)
-        setSelectedState(parseInt(e.target.value))
-        console.log(states)
+        const selectedSplittedValue = e.target.value.split("#")
+        setSelectedState(parseInt(selectedSplittedValue[0]), selectedSplittedValue[1])
     }
 
     useEffect(() => {
@@ -24,14 +22,14 @@ const SelectState = ({states, fetchStates,setSelectedState}:SelectStateProps) =>
     }, [fetchStates])
 
     return (
-        <div className={states.selectedStateId === -1 ? "select-state" : "select-state active-selected-state"}>
+        <div className={states.selectedState? "select-state" : "select-state active-selected-state"}>
             <form className="select-state-form" >
                 <label className="select-state-form-label">Megye</label>
-                <select defaultValue="default" className={states.selectedStateId ===-1 ? "select-state-form-select":"select-state-form-select selected-state"} name="states" id="states" onChange={(e) => {submitSelectedState(e)}}>
+                <select defaultValue="default" className={states.selectedState ? "select-state-form-select":"select-state-form-select selected-state"} name="states" id="states" onChange={(e) => {submitSelectedState(e)}}>
                     <option className="select-state-form-option" value="default" disabled>Válassz megyét!</option>
                     {
                         states.states.map(state => (
-                            <option key={state.id} className="select-state-form-option" value={state.id}>{state.name}</option>
+                            <option key={state.id} className="select-state-form-option" value={`${state.id}#${state.name}`}>{state.name}</option>
                         ))
                     }
                 </select>
@@ -49,7 +47,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         fetchStates: () => dispatch(fetchStates()),
-        setSelectedState: (id:number) => dispatch(setSelectedState(id)),
+        setSelectedState: (id:number,name:string) => dispatch(setSelectedState(id,name)),
     }
 }
 

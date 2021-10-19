@@ -11,7 +11,7 @@ const initialState = {
     loading: false,
     error: "",
     states: [],
-    selectedStateId: -1
+    selectedState: null
 }
 
 const stateReducer = (state: StatesStateType = initialState, action: StateReducerActionsType) => {
@@ -41,7 +41,7 @@ const stateReducer = (state: StatesStateType = initialState, action: StateReduce
         case SET_SELECTED_STATE: {
             return {
                 ...state,
-                selectedStateId: action.payload
+                selectedState: action.payload
             }
         }
 
