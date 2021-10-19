@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+.add-new-city {
+    background-color: #cae99a;
+    padding: 2rem;
+    display: flex;
+    font-family: 'Titillium Web', sans-serif;
+    position: relative;
+}
+
+.add-new-city::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -15px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent transparent #cae99a;
+}
+
+.add-new-city-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 18rem;
+}
+
+.add-new-city-form-label {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.add-new-city-form-input {
+    margin: .3rem 0;
+    width: auto;
+    outline: 0;
+    background: #fff;
+    color: #181819;
+    padding: .5rem;
+    font-style: italic;
+    border: 1px solid #181819;
+    text-align: center;
+}
+
+.add-new-city-form-input::placeholder {
+    color: #afafb8;
+}
+
+.add-new-city-form-submit-button {
+    background-color: #80ba27;
+    border-radius: 5px;
+    border: none;
+    padding: .5rem 0;
+    text-transform: uppercase;
+    font-size: .9rem;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
