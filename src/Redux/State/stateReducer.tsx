@@ -1,26 +1,22 @@
-import { FETCH_STATES_ERROR, FETCH_STATES_REQUEST, FETCH_STATES_SUCCESS } from "./stateTypes"
-
-type StateReducerActionsType = {
-    type: string,
-    payload: any
-}
-
-type StatesStateType = {
-    loading: boolean,
-    error: String,
-    states: Object[]
-}
+import {
+    FETCH_STATES_ERROR,
+    FETCH_STATES_REQUEST,
+    FETCH_STATES_SUCCESS,
+    SET_SELECTED_STATE,
+    StateReducerActionsType,
+    StatesStateType
+} from "./stateTypes"
 
 const initialState = {
     loading: false,
     error: "",
-    states: []
+    states: [],
+    selectedStateId: -1
 }
 
 const stateReducer = (state: StatesStateType = initialState, action: StateReducerActionsType) => {
 
     switch (action.type) {
-
         case FETCH_STATES_REQUEST: {
             return {
                 ...state,
@@ -42,7 +38,14 @@ const stateReducer = (state: StatesStateType = initialState, action: StateReduce
             }
         }
 
-        default: 
+        case SET_SELECTED_STATE: {
+            return {
+                ...state,
+                selectedStateId: action.payload
+            }
+        }
+
+        default:
             return state
     }
 

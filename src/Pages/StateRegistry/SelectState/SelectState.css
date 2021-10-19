@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+.select-state {
+    background-color: #b1c9ff;
+    padding: 3rem 4rem;
+    display: flex;
+    font-family: 'Titillium Web', sans-serif;
+    position: relative;
+}
+
+.active-selected-state.select-state::after{
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -15px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: #b1c9ff transparent transparent transparent;
+}
+
+.select-state-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-state-form-label {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.select-state-form-select {
+    margin: .3rem 0;
+    width: 15rem;
+    outline: 0;
+    background: #fff;
+    color: #afafb8;
+    padding: .5rem;
+    font-style: italic;
+    border: 1px solid #181819;
+}
+
+.select-state-form-select.selected-state {
+    color: #181819;
+    font-style: normal;
+}
+
+.select-state-form-option {
+    color: #181819;
+}

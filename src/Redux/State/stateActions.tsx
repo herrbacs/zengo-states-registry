@@ -1,6 +1,7 @@
 import axios from "axios"
-import { FETCH_STATES_ERROR, FETCH_STATES_SUCCESS, FETCH_STATES_REQUEST } from "./stateTypes"
+import { FETCH_STATES_ERROR, FETCH_STATES_SUCCESS, FETCH_STATES_REQUEST, SET_SELECTED_STATE } from "./stateTypes"
 
+//FETCH STATES FROM API
 export const fetchStatesRequest = () => {
     return {type:FETCH_STATES_REQUEST}
 }
@@ -21,14 +22,19 @@ export const fetchStates = () => {
                 'content-type' : 'application/x-www-form-urlencoded'
             },
         })
-        .then(response => {
-            const users = response.data
+        .then((response:any) => {
+            const users = response.data.data
             dispatch(fetchStatesSuccess(users))
         })
-        .catch(error => {
+        .catch((error:any) => {
             const errorMsg = error.message
             dispatch(fetchStatesSuccess(errorMsg))
         })
 
     }
+}
+
+//SET SELECTED STATE
+export const setSelectedState = (id:number) => {
+    return {type:SET_SELECTED_STATE, payload:id}
 }
