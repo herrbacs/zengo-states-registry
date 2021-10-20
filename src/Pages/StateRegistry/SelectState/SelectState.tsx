@@ -22,10 +22,10 @@ const SelectState = ({states, fetchStates,setSelectedState}:SelectStateProps) =>
     }, [fetchStates])
 
     return (
-        <div className={states.selectedState? "select-state" : "select-state active-selected-state"}>
+        <div className={states.selectedState? "select-state active-selected-state" : "select-state" }>
             <form className="select-state-form" >
                 <label className="select-state-form-label">Megye</label>
-                <select defaultValue="default" className={states.selectedState ? "select-state-form-select":"select-state-form-select selected-state"} name="states" id="states" onChange={(e) => {submitSelectedState(e)}}>
+                <select defaultValue="default" className={states.selectedState ? "select-state-form-select selected-state" : "select-state-form-select"} name="states" id="states" onChange={(e) => {submitSelectedState(e)}}>
                     <option className="select-state-form-option" value="default" disabled>Válassz megyét!</option>
                     {
                         states.states.map(state => (

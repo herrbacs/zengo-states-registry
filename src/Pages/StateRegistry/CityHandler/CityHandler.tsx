@@ -12,6 +12,8 @@ type CityHandlerProps = {
 
 const CityHandler = (props: any) => {
 
+    //Make a shallow copy of the cities, and on change --> overwrite that one
+    //Vagy a nevek placeholderek lesznek és amikor belekattint akkor a legit neve lesz ott és bumm
     const [selectedCity, setselectedCity] = useState({
         id: -1,
         name: ""
@@ -22,7 +24,6 @@ const CityHandler = (props: any) => {
             name: e.target.value,
             id: parseInt(e.currentTarget.id)
         })
-        console.log(selectedCity)
     }
 
     useEffect(() => {
@@ -51,7 +52,9 @@ const CityHandler = (props: any) => {
                                     <input id={city.id}
                                         className="city-handler-form-input"
                                         type="text" value={city.name}
-                                        onFocus={(e) => { toggleSelectedCity(e) }} />
+                                        onFocus={(e) => { toggleSelectedCity(e) }}
+                                        
+                                        />
                                     <div className="city-handler-form-buttons-row">
                                         {selectedCity.name === city.name &&
                                             (

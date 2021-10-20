@@ -16,5 +16,11 @@
 .selected-state-container{
     margin: auto auto auto 0;
     height: 100%;
+    display: flex;
     width: 40rem;
+}
+
+
+.no-selected-state-img{
+    margin: 10rem auto auto 5rem;
 }
