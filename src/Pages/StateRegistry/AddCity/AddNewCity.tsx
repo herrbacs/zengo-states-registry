@@ -1,33 +1,38 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
+import { uploadNewCity } from '../../../Redux/City/cityActions'
 import './AddNewCity.css'
 
 type AddnewCityProps = {
-    selectedState: number
+    selectedStateID: number,
+    uploadNewCity: Function,
+    cities: any,
 }
 
-const AddNewCity = (props: any) => {
-
-    console.log(props)
+const AddNewCity = ({ selectedStateID, uploadNewCity, cities }: AddnewCityProps) => {
 
     const [newCityName, setNewCityName] = useState("")
+    const [toggleShake, setToggleShake] = useState(false)
 
     const submitNewCity = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-        console.log(newCityName)
+        if (newCityName.length > 0) {
+            uploadNewCity(selectedStateID, newCityName)
+            setNewCityName("")
+        }else{
+            setToggleShake(true)
+            setTimeout(() =>{
+                setToggleShake(false)
+            },600)
+        }
     }
-
-    useEffect(() => {
-        //SelectedId alapján 
-    }, [])
 
     return (
         <div className="add-new-city">
             <form className="add-new-city-form" onSubmit={e => { submitNewCity(e) }}>
                 <label className="add-new-city-form-label">új város</label>
                 <input
-                    className="add-new-city-form-input"
+                    className={toggleShake ? "add-new-city-form-input empty" : "add-new-city-form-input"}
                     type="text"
                     value={newCityName} onChange={(e) => { setNewCityName(e.target.value) }}
                     placeholder="Település neve"
@@ -35,6 +40,7 @@ const AddNewCity = (props: any) => {
                     onBlur={(e) => { e.target.placeholder = "Település neve" }}
                 ></input>
                 <button className="add-new-city-form-submit-button" type="submit">felveszem</button>
+                <label className={"add-new-city-form-error"}>{cities.error}</label>
             </form>
         </div>
     )
@@ -45,13 +51,13 @@ const AddNewCity = (props: any) => {
 
 const mapStateToProps = (state: any) => {
     return {
-        
+        cities: state.cities
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        //uploadCity : () => dispatch(uploadCity())
+        uploadNewCity: (stateId: number, newCityName: String) => dispatch(uploadNewCity(stateId, newCityName))
     }
 }
 

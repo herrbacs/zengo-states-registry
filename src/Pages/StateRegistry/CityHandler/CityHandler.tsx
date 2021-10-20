@@ -7,10 +7,12 @@ import './CityHandler.css'
 
 type CityHandlerProps = {
     selectedState: Object,
-    fetchCities: Function
+    fetchCities: Function,
+    cities: Object
 }
 
 const CityHandler = (props: any) => {
+    console.log(props)
 
     //Make a shallow copy of the cities, and on change --> overwrite that one
     //Vagy a nevek placeholderek lesznek és amikor belekattint akkor a legit neve lesz ott és bumm
@@ -48,7 +50,7 @@ const CityHandler = (props: any) => {
                     <form className="city-handler-body-form">
                         {
                             props.cities.cities.map((city: any) => (
-                                <div className="city-handler-form-input-container">
+                                <div key={city.id} className="city-handler-form-input-container">
                                     <input id={city.id}
                                         className="city-handler-form-input"
                                         type="text" value={city.name}

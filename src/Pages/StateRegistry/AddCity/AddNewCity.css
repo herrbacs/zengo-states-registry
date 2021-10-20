@@ -47,7 +47,48 @@
     color: #afafb8;
 }
 
+.add-new-city-form-input.empty{
+    animation: shake 500ms ease;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    10% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+
+    30% {
+        transform: translateX(-.2rem) rotate(-1deg);
+
+    }
+
+    50% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+
+    70% {
+        transform: translateX(-.2rem) rotate(-1deg);
+
+    }
+
+    90% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+    100% {
+        transform: translateX(0);
+
+    }
+  }
+
+
 .add-new-city-form-submit-button {
+    transition: .5s ease;
+    transition-property: transform, box-shadow;
     background-color: #80ba27;
     border-radius: 5px;
     border: none;
@@ -58,3 +99,15 @@
     font-weight: 700;
     cursor: pointer;
 }
+
+.add-new-city-form-submit-button:hover{
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.add-new-city-form-error{
+    margin-top: .3rem;
+    text-align: center;
+    color: red;
+}
+

@@ -1,10 +1,10 @@
 import axios from "axios"
-import { UploadCityRequest } from "../State/stateTypes"
 
 import {
     FETCH_CITIES_ERROR,
     FETCH_CITIES_REQUEST,
     FETCH_CITIES_SUCCESS,
+    UploadCity,
     UPLOAD_NEW_CITY_ERROR,
     UPLOAD_NEW_CITY_REQUEST,
     UPLOAD_NEW_CITY_SUCCESS
@@ -15,31 +15,44 @@ import {
 export const uploadNewCityRequest = () => {
     return { type: UPLOAD_NEW_CITY_REQUEST }
 }
-export const uploadNewCitySuccess = () => {
-    return { type: UPLOAD_NEW_CITY_SUCCESS }
+export const uploadNewCitySuccess = (city:UploadCity) => {
+    return { type: UPLOAD_NEW_CITY_SUCCESS, payload:city}
 }
-export const uploadNewCityFailure = () => {
-    return { type: UPLOAD_NEW_CITY_ERROR }
+export const uploadNewCityError = (error:String) => {
+    return { type: UPLOAD_NEW_CITY_ERROR, payload:error}
 }
-export const uploadNewCity = (city: UploadCityRequest) => {
+export const uploadNewCity = (stateId: number, newCityName: String) => {
     return (dispatch: Function) => {
 
         dispatch(uploadNewCityRequest)
 
-        axios.get("https://probafeladat-api.zengo.eu/api/city/", {
-            headers: {
-                'token': '5ed2c5de7e3f5f797b1e7ab5a8e01e43',
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-                //SET BODY
+        const params = new URLSearchParams();
+        params.append('name', newCityName.toString());
+        params.append('state_id', stateId.toString());
+
+        axios.put("https://probafeladat-api.zengo.eu/api/city",
+            params,
+            {
+                headers: {
+                    'token': '5ed2c5de7e3f5f797b1e7ab5a8e01e43',
+                    'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+                }
             }
-        })
+        )
             .then((response: any) => {
-                //ADD NEW CITY 
+                let errorMsg = ""
+                //CHECK ERROR MESSAGE IN RESPONSE
+                if(typeof response.data.errorMessage === 'object'){
+                    errorMsg = response.data.errorMessage.name[0]
+                    dispatch(uploadNewCityError(errorMsg))
+                }else{
+                    const newCityObject = response.data.data
+                    dispatch(uploadNewCitySuccess(newCityObject))
+                }
+                
             })
             .catch((error: any) => {
-                //SET ERROR IF DUPLICATED CITY
+                console.log(error)
             })
 
     }

@@ -13,14 +13,15 @@ export type StateObject = {
     name:String
 }
 
+export type SelectedState = {
+    id:number,
+    name:String
+}
+
 export type StatesStateType = {
     loading: boolean,
     error: String,
     states: StateObject[],
-    selectedState: Object | null
+    selectedState: SelectedState | null
 }
 
-export type UploadCityRequest = {
-    name:String,
-    state_id: number
-}

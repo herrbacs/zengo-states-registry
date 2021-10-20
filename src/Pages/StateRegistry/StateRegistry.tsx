@@ -14,12 +14,13 @@ type StateRegistryProps = {
 
 
 const StateRegistry = ({ states }: StateRegistryProps) => {
+    console.log(states)
     return (
         <div className="state-registry">
             <div className="select-state-column">
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-top.png'} alt="" />
                 <SelectState />
-                {states.selectedState && <AddNewCity selectedState={states.selectedState} />}
+                {states.selectedState && <AddNewCity selectedStateID={states.selectedState.id} />}
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-bottom.png'} alt="" />
             </div>
             <div className="selected-state-container">
