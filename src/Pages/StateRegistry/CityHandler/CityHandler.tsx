@@ -1,9 +1,8 @@
-import { faCheck, faCross, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { deleteCity, fetchCities } from '../../../Redux/City/cityActions'
-import { setSelectedState } from '../../../Redux/State/stateActions'
 import './CityHandler.css'
 
 type CityHandlerProps = {
@@ -75,7 +74,6 @@ const CityHandler = (props: any) => {
                                         }}
                                         
                                     />
-                                    <div className="city-handler-form-buttons-row">
                                         {(selectedCity.id === city.id && visibleButtons) &&
                                             (
                                                 <div className="city-handler-form-buttons-container">
@@ -91,7 +89,6 @@ const CityHandler = (props: any) => {
                                                 </div>
                                             )
                                         }
-                                    </div>
                                 </div>
                             ))
                         }
