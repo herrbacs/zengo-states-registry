@@ -7,6 +7,9 @@ import {
     FETCH_CITIES_ERROR,
     FETCH_CITIES_REQUEST,
     FETCH_CITIES_SUCCESS,
+    UPDATE_CITY_ERROR,
+    UPDATE_CITY_REQUEST,
+    UPDATE_CITY_SUCCESS,
     UploadCity,
     UPLOAD_NEW_CITY_ERROR,
     UPLOAD_NEW_CITY_REQUEST,
@@ -132,5 +135,48 @@ export const deleteCity = (cityId: number) => {
                 console.log(error)
             })
 
+        }
+        
+        
+        
     }
-}
+
+    //UPDATE CITY
+
+    export const updateCityRequest = () => {
+        return { type: UPDATE_CITY_REQUEST }
+    }
+    export const updateCitySuccess = (cityId:number,newName:String) => {
+        return { type: UPDATE_CITY_SUCCESS, payload: {id:cityId, name:newName}}
+    }
+    export const updateCityFailure = (error: any) => {
+        return { type: UPDATE_CITY_ERROR, payload: error }
+    }
+    export const updateCity = (newName:String,cityId: number) => {
+        return (dispatch: Function) => {
+            dispatch(updateCityRequest)
+    
+            const params = new URLSearchParams();
+            params.append('city_id', cityId.toString());
+            params.append('name', newName.toString());
+    
+            axios.patch(`https://probafeladat-api.zengo.eu/api/city`,params,
+                {
+                    headers: {
+                        'token': '5ed2c5de7e3f5f797b1e7ab5a8e01e43',
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    
+                }).then((response: any) => {
+                    console.log(response)
+                    dispatch(updateCitySuccess(cityId,newName))
+                })
+                .catch((error: any) => {
+                    console.log(error)
+                })
+    
+            }
+            
+            
+            
+        }

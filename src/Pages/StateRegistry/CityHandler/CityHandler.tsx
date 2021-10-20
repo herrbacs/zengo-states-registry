@@ -2,13 +2,14 @@ import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { deleteCity, fetchCities } from '../../../Redux/City/cityActions'
+import { deleteCity, fetchCities, updateCity } from '../../../Redux/City/cityActions'
 import './CityHandler.css'
 
 type CityHandlerProps = {
     selectedState: Object,
     fetchCities: Function,
     deleteCity: Function,
+    updateCity: Function,
     cities: Object
 }
 
@@ -19,14 +20,14 @@ const CityHandler = (props: any) => {
     })
     const [visibleButtons, setVisibleButtons] = useState(false)
 
-    const removeCityAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const cityIdToDelete = parseInt(e.currentTarget.id)
+
+    const removeCityAction = () => {
         setVisibleButtons(false)
-        props.deleteCity(cityIdToDelete)
+        props.deleteCity(selectedCity.id)
     }
-    const updateCityAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const cityIdToDelete = parseInt(e.currentTarget.id)
+    const updateCityAction = () => {
         setVisibleButtons(false)
+        props.updateCity(selectedCity.id, selectedCity.name)
     }
 
 
@@ -54,7 +55,7 @@ const CityHandler = (props: any) => {
                             props.cities.cities.map((city: any) => (
                                 <div key={city.id} className="city-handler-form-input-container">
                                     <input id={city.id}
-                                        className="city-handler-form-input"
+                                        className={(selectedCity.id === city.id && visibleButtons) ? "city-handler-form-input  active-input" : "city-handler-form-input"}
                                         type="text"
                                         placeholder={city.name}
                                         onChange={(e) => {
@@ -72,23 +73,23 @@ const CityHandler = (props: any) => {
                                             })
                                             setVisibleButtons(true)
                                         }}
-                                        
+
                                     />
-                                        {(selectedCity.id === city.id && visibleButtons) &&
-                                            (
-                                                <div className="city-handler-form-buttons-container">
-                                                    <button id={city.id} onClick={(e) => { removeCityAction(e)}} className="city-handler-form-button delete-button">
-                                                        <FontAwesomeIcon className="button-icon" icon={faTrash} />
-                                                    </button>
-                                                    <button id={city.id} onClick={e => { updateCityAction(e)}} className="city-handler-form-button update-button">
-                                                        <FontAwesomeIcon className="button-icon" icon={faCheck} />
-                                                    </button>
-                                                    <button id={city.id} onClick={e => { setVisibleButtons(false) }} className="city-handler-form-button cancel-button">
-                                                        <FontAwesomeIcon className="button-icon" icon={faTimes} />
-                                                    </button>
-                                                </div>
-                                            )
-                                        }
+                                    {(selectedCity.id === city.id && visibleButtons) &&
+                                        (
+                                            <div className="city-handler-form-buttons-container">
+                                                <button onClick={() => { removeCityAction() }} className="city-handler-form-button delete-button">
+                                                    <FontAwesomeIcon className="button-icon" icon={faTrash} />
+                                                </button>
+                                                <button onClick={() => { updateCityAction() }} className="city-handler-form-button update-button">
+                                                    <FontAwesomeIcon className="button-icon" icon={faCheck} />
+                                                </button>
+                                                <button onClick={() => { setVisibleButtons(false) }} className="city-handler-form-button cancel-button">
+                                                    <FontAwesomeIcon className="button-icon" icon={faTimes} />
+                                                </button>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             ))
                         }
@@ -108,7 +109,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         fetchCities: (stateId: number) => dispatch(fetchCities(stateId)),
-        deleteCity: (cityId: number) => dispatch(deleteCity(cityId))
+        deleteCity: (cityId: number) => dispatch(deleteCity(cityId)),
+        updateCity: (cityId: number, newName: String) => dispatch(updateCity(newName, cityId))
     }
 }
 

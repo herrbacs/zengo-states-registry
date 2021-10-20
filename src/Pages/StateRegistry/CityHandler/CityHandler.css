@@ -81,6 +81,10 @@
     cursor: pointer;
 }
 
+.city-handler-form-input.active-input{
+    border: 1px solid #181819;
+}
+
 .city-handler-form-input:hover{
     border: 1px solid #ceceda;
 }

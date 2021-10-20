@@ -10,6 +10,11 @@ export const DELETE_CITY_REQUEST= "DELETE_CITY_REQUEST"
 export const DELETE_CITY_SUCCESS= "DELETE_CITY_SUCCESS"
 export const DELETE_CITY_ERROR= "DELETE_CITY_ERROR"
 
+export const UPDATE_CITY_REQUEST= "UPDATE_CITY_REQUEST"
+export const UPDATE_CITY_SUCCESS= "UPDATE_CITY_SUCCESS"
+export const UPDATE_CITY_ERROR= "UPDATE_CITY_ERROR"
+
+
 export type UploadCity = {
     name:String,
     state_id: number

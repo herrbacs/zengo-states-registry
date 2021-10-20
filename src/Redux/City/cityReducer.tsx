@@ -1,4 +1,4 @@
-import { City, DELETE_CITY_ERROR, DELETE_CITY_REQUEST, DELETE_CITY_SUCCESS, FETCH_CITIES_ERROR, FETCH_CITIES_REQUEST, FETCH_CITIES_SUCCESS, UPLOAD_NEW_CITY_ERROR, UPLOAD_NEW_CITY_REQUEST, UPLOAD_NEW_CITY_SUCCESS } from "./cityTypes"
+import { City, DELETE_CITY_ERROR, DELETE_CITY_REQUEST, DELETE_CITY_SUCCESS, FETCH_CITIES_ERROR, FETCH_CITIES_REQUEST, FETCH_CITIES_SUCCESS, UPDATE_CITY_ERROR, UPDATE_CITY_REQUEST, UPDATE_CITY_SUCCESS, UPLOAD_NEW_CITY_ERROR, UPLOAD_NEW_CITY_REQUEST, UPLOAD_NEW_CITY_SUCCESS } from "./cityTypes"
 
 const initialState = {
     loading: false,
@@ -11,26 +11,26 @@ const initialState = {
 const cityReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
         //UPLOAD NEW CITY AND SET IT
-        case UPLOAD_NEW_CITY_REQUEST : {
-            return{
+        case UPLOAD_NEW_CITY_REQUEST: {
+            return {
                 ...state,
-                loading:true
+                loading: true
             }
         }
-        case UPLOAD_NEW_CITY_SUCCESS : {
-            return{
+        case UPLOAD_NEW_CITY_SUCCESS: {
+            return {
                 ...state,
-                loading:false,
-                cities:[
+                loading: false,
+                cities: [
                     ...state.cities,
                     action.payload
                 ]
             }
         }
-        case UPLOAD_NEW_CITY_ERROR : {
-            return{
+        case UPLOAD_NEW_CITY_ERROR: {
+            return {
                 ...state,
-                loading:false,
+                loading: false,
                 uploadError: action.payload
             }
         }
@@ -55,7 +55,7 @@ const cityReducer = (state: any = initialState, action: any) => {
             }
         }
 
-        //DELETE 
+        //DELETE CITY
         case DELETE_CITY_REQUEST: {
             return {
                 ...state,
@@ -66,10 +66,41 @@ const cityReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 cities: state.cities.filter(
-                    (city:City) => city.id !== action.payload)
+                    (city: City) => city.id !== action.payload)
             }
         }
         case DELETE_CITY_ERROR: {
+            return {
+                ...state,
+                deleteError: action.payload
+            }
+        }
+
+        //UPDATE CITY
+
+        case UPDATE_CITY_REQUEST: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+        case UPDATE_CITY_SUCCESS: {
+            return {
+                ...state,
+                cities: state.cities.map((city: City) => {
+                    if (city.id === action.payload.id) {
+                        return {
+                            ...city,
+                            name: action.payload.name
+                        }
+                    } else {
+                        return city
+                    }
+                }
+                )
+            }
+        }
+        case UPDATE_CITY_ERROR: {
             return {
                 ...state,
                 deleteError: action.payload
