@@ -40,14 +40,11 @@ const AddNewCity = ({ selectedStateID, uploadNewCity, cities }: AddnewCityProps)
                     onBlur={(e) => { e.target.placeholder = "Település neve" }}
                 ></input>
                 <button className="add-new-city-form-submit-button" type="submit">felveszem</button>
-                <label className={"add-new-city-form-error"}>{cities.error}</label>
+                <label className={"add-new-city-form-error"}>{cities.uploadError}</label>
             </form>
         </div>
     )
 }
-
-//Megye Városai
-//Új város
 
 const mapStateToProps = (state: any) => {
     return {

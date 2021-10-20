@@ -1,32 +1,35 @@
 import { faCheck, faCross, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { InputHTMLAttributes, useEffect, useState } from 'react'
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { fetchCities } from '../../../Redux/City/cityActions'
+import { deleteCity, fetchCities } from '../../../Redux/City/cityActions'
+import { setSelectedState } from '../../../Redux/State/stateActions'
 import './CityHandler.css'
 
 type CityHandlerProps = {
     selectedState: Object,
     fetchCities: Function,
+    deleteCity: Function,
     cities: Object
 }
 
 const CityHandler = (props: any) => {
-    console.log(props)
-
-    //Make a shallow copy of the cities, and on change --> overwrite that one
-    //Vagy a nevek placeholderek lesznek és amikor belekattint akkor a legit neve lesz ott és bumm
-    const [selectedCity, setselectedCity] = useState({
+    const [selectedCity, setSelectedCity] = useState({
         id: -1,
         name: ""
     })
+    const [visibleButtons, setVisibleButtons] = useState(false)
 
-    const toggleSelectedCity = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setselectedCity({
-            name: e.target.value,
-            id: parseInt(e.currentTarget.id)
-        })
+    const removeCityAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const cityIdToDelete = parseInt(e.currentTarget.id)
+        setVisibleButtons(false)
+        props.deleteCity(cityIdToDelete)
     }
+    const updateCityAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const cityIdToDelete = parseInt(e.currentTarget.id)
+        setVisibleButtons(false)
+    }
+
 
     useEffect(() => {
         props.fetchCities(props.selectedState.id)
@@ -47,27 +50,42 @@ const CityHandler = (props: any) => {
                     <span className="city-handler-body-title">városok</span>
                 </div>
                 <div className="city-handler-body-form-container">
-                    <form className="city-handler-body-form">
+                    <form onSubmit={e => { e.preventDefault() }} className="city-handler-body-form">
                         {
                             props.cities.cities.map((city: any) => (
                                 <div key={city.id} className="city-handler-form-input-container">
                                     <input id={city.id}
                                         className="city-handler-form-input"
-                                        type="text" value={city.name}
-                                        onFocus={(e) => { toggleSelectedCity(e) }}
+                                        type="text"
+                                        placeholder={city.name}
+                                        onChange={(e) => {
+                                            setSelectedCity({
+                                                ...selectedCity,
+                                                name: e.target.value,
+                                            })
+                                        }}
+                                        onFocus={(e) => {
+                                            e.target.placeholder = ""
+                                            e.target.value = city.name
+                                            setSelectedCity({
+                                                ...selectedCity,
+                                                id: city.id,
+                                            })
+                                            setVisibleButtons(true)
+                                        }}
                                         
-                                        />
+                                    />
                                     <div className="city-handler-form-buttons-row">
-                                        {selectedCity.name === city.name &&
+                                        {(selectedCity.id === city.id && visibleButtons) &&
                                             (
-                                                <div  className="city-handler-form-buttons-container">
-                                                    <button className="city-handler-form-button delete-button">
+                                                <div className="city-handler-form-buttons-container">
+                                                    <button id={city.id} onClick={(e) => { removeCityAction(e)}} className="city-handler-form-button delete-button">
                                                         <FontAwesomeIcon className="button-icon" icon={faTrash} />
                                                     </button>
-                                                    <button className="city-handler-form-button update-button">
+                                                    <button id={city.id} onClick={e => { updateCityAction(e)}} className="city-handler-form-button update-button">
                                                         <FontAwesomeIcon className="button-icon" icon={faCheck} />
                                                     </button>
-                                                    <button className="city-handler-form-button cancel-button">
+                                                    <button id={city.id} onClick={e => { setVisibleButtons(false) }} className="city-handler-form-button cancel-button">
                                                         <FontAwesomeIcon className="button-icon" icon={faTimes} />
                                                     </button>
                                                 </div>
@@ -92,11 +110,14 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        fetchCities: (stateId: number) => dispatch(fetchCities(stateId))
+        fetchCities: (stateId: number) => dispatch(fetchCities(stateId)),
+        deleteCity: (cityId: number) => dispatch(deleteCity(cityId))
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CityHandler)
+export default React.memo(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(CityHandler)
+)

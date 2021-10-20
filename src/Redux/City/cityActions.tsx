@@ -1,6 +1,9 @@
 import axios from "axios"
 
 import {
+    DELETE_CITY_ERROR,
+    DELETE_CITY_REQUEST,
+    DELETE_CITY_SUCCESS,
     FETCH_CITIES_ERROR,
     FETCH_CITIES_REQUEST,
     FETCH_CITIES_SUCCESS,
@@ -15,11 +18,11 @@ import {
 export const uploadNewCityRequest = () => {
     return { type: UPLOAD_NEW_CITY_REQUEST }
 }
-export const uploadNewCitySuccess = (city:UploadCity) => {
-    return { type: UPLOAD_NEW_CITY_SUCCESS, payload:city}
+export const uploadNewCitySuccess = (city: UploadCity) => {
+    return { type: UPLOAD_NEW_CITY_SUCCESS, payload: city }
 }
-export const uploadNewCityError = (error:String) => {
-    return { type: UPLOAD_NEW_CITY_ERROR, payload:error}
+export const uploadNewCityError = (error: String) => {
+    return { type: UPLOAD_NEW_CITY_ERROR, payload: error }
 }
 export const uploadNewCity = (stateId: number, newCityName: String) => {
     return (dispatch: Function) => {
@@ -42,14 +45,14 @@ export const uploadNewCity = (stateId: number, newCityName: String) => {
             .then((response: any) => {
                 let errorMsg = ""
                 //CHECK ERROR MESSAGE IN RESPONSE
-                if(typeof response.data.errorMessage === 'object'){
+                if (typeof response.data.errorMessage === 'object') {
                     errorMsg = response.data.errorMessage.name[0]
                     dispatch(uploadNewCityError(errorMsg))
-                }else{
+                } else {
                     const newCityObject = response.data.data
                     dispatch(uploadNewCitySuccess(newCityObject))
                 }
-                
+
             })
             .catch((error: any) => {
                 console.log(error)
@@ -90,6 +93,43 @@ export const fetchCities = (stateId: number) => {
             })
             .catch((error: any) => {
                 dispatch(fetchCitiesSuccess(error))
+            })
+
+    }
+}
+
+//DELETE CITY
+export const deleteCityRequest = () => {
+    return { type: DELETE_CITY_REQUEST }
+}
+export const deleteCitySuccess = (cityId:number) => {
+    return { type: DELETE_CITY_SUCCESS, payload: cityId}
+}
+export const deleteCityFailure = (error: any) => {
+    return { type: DELETE_CITY_ERROR, payload: error }
+}
+export const deleteCity = (cityId: number) => {
+    return (dispatch: Function) => {
+        dispatch(deleteCityRequest)
+
+        const params = new URLSearchParams();
+        params.append('city_id', cityId.toString());
+
+        axios.delete(`https://probafeladat-api.zengo.eu/api/city`,
+            {
+                headers: {
+                    'token': '5ed2c5de7e3f5f797b1e7ab5a8e01e43',
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                params
+            }).then((response: any) => {
+                console.log(response)
+                if(response.data.success){
+                    dispatch(deleteCitySuccess(cityId))
+                }
+            })
+            .catch((error: any) => {
+                console.log(error)
             })
 
     }

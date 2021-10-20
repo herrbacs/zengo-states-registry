@@ -1,14 +1,16 @@
-import { FETCH_CITIES_ERROR, FETCH_CITIES_REQUEST, FETCH_CITIES_SUCCESS, UPLOAD_NEW_CITY_ERROR, UPLOAD_NEW_CITY_REQUEST, UPLOAD_NEW_CITY_SUCCESS } from "./cityTypes"
+import { City, DELETE_CITY_ERROR, DELETE_CITY_REQUEST, DELETE_CITY_SUCCESS, FETCH_CITIES_ERROR, FETCH_CITIES_REQUEST, FETCH_CITIES_SUCCESS, UPLOAD_NEW_CITY_ERROR, UPLOAD_NEW_CITY_REQUEST, UPLOAD_NEW_CITY_SUCCESS } from "./cityTypes"
 
 const initialState = {
     loading: false,
     cities: [],
-    error: ""
+    uploadError: "",
+    deleteError: "",
+    fetchError: ""
 }
 
 const cityReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
-        //FETCH NEW CITY AND SET IT
+        //UPLOAD NEW CITY AND SET IT
         case UPLOAD_NEW_CITY_REQUEST : {
             return{
                 ...state,
@@ -29,11 +31,11 @@ const cityReducer = (state: any = initialState, action: any) => {
             return{
                 ...state,
                 loading:false,
-                error: action.payload
+                uploadError: action.payload
             }
         }
 
-        //FETCH DATA FROM API
+        //FETCH CITIES FROM API
         case FETCH_CITIES_REQUEST: {
             return {
                 ...state,
@@ -49,7 +51,28 @@ const cityReducer = (state: any = initialState, action: any) => {
         case FETCH_CITIES_ERROR: {
             return {
                 ...state,
-                error: action.payload
+                fetchError: action.payload
+            }
+        }
+
+        //DELETE 
+        case DELETE_CITY_REQUEST: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+        case DELETE_CITY_SUCCESS: {
+            return {
+                ...state,
+                cities: state.cities.filter(
+                    (city:City) => city.id !== action.payload)
+            }
+        }
+        case DELETE_CITY_ERROR: {
+            return {
+                ...state,
+                deleteError: action.payload
             }
         }
 
