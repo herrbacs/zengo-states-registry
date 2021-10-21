@@ -6,7 +6,6 @@ import { StatesStateType } from '../../Redux/State/stateTypes'
 import AddNewCity from './AddCity/AddNewCity'
 import CityHandler from './CityHandler/CityHandler'
 
-
 type StateRegistryProps = {
     states: StatesStateType
 }
@@ -17,7 +16,8 @@ const StateRegistry = ({ states }: StateRegistryProps) => {
             <div className="select-state-column">
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-top.png'} alt="" />
                 <SelectState />
-                {states.selectedState && <AddNewCity selectedStateID={states.selectedState.id} />}
+                {states.selectedState && 
+                    <AddNewCity selectedStateID={states.selectedState.id} />}
                 <img className="" src={process.env.PUBLIC_URL + '/state-registry/zengo-rectangles-bottom.png'} alt="" />
             </div>
             <div className="selected-state-container">

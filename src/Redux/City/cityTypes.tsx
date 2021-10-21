@@ -27,6 +27,6 @@ export type UploadCity = {
     state_id: number
 }
 export type City = {
+    id: number|String
     name:String,
-    id: number
 }

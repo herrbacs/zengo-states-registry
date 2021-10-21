@@ -1,7 +1,7 @@
 import './SelectState.css'
 import { connect } from 'react-redux'
 import { fetchStates, setSelectedState } from '../../../Redux/State/stateActions'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { StatesStateType } from '../../../Redux/State/stateTypes'
 
 type SelectStateProps = {

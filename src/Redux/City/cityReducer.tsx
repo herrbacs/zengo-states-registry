@@ -1,3 +1,4 @@
+import { fetchCities } from "./cityActions"
 import {
     City,
     CityReducerState,
@@ -33,14 +34,16 @@ const cityReducer = (state: CityReducerState = initialState, action: any) => {
             }
         }
         case UPLOAD_NEW_CITY_SUCCESS: {
+            
             return {
                 ...state,
                 loading: false,
                 uploadError: "",
-                cities: [
+                cities: state.cities && state.cities.length > 0 ? [
                     ...state.cities,
                     action.payload
                 ]
+                :[action.payload]
             }
         }
         case UPLOAD_NEW_CITY_ERROR: {

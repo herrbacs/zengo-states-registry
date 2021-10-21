@@ -36,6 +36,5 @@ export const fetchStates = () => {
 
 //SET SELECTED STATE
 export const setSelectedState = (stateId:number,name:string) => {
-    console.log(stateId)
     return {type:SET_SELECTED_STATE, payload:{id:stateId,name:name}}
 }

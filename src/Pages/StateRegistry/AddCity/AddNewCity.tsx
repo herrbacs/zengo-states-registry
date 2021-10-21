@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { uploadNewCity } from '../../../Redux/City/cityActions'
 import './AddNewCity.css'

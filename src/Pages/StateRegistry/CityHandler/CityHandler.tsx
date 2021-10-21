@@ -25,24 +25,22 @@ const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCit
     const [toggleShake, setToggleShake] = useState(false)
 
     const updateCityAction = () => {
-        if(selectedCity.name.length >= 3) {
+        if (selectedCity.name.length >= 3) {
             updateCity(selectedCity.id, selectedCity.name)
-            setSelectedCity({
-                ...selectedCity,
-                id: -1,
-            })
-        }else{
+
+        } else {
             setToggleShake(true)
             setTimeout(() => {
                 setToggleShake(false)
-            },600)
+            }, 600)
         }
 
     }
 
     useEffect(() => {
         fetchCities(selectedState.id)
-    }, [selectedState])
+    }, [fetchCities,selectedState])
+
     return (
         <div className="city-handler">
             <div className="city-handler-header">
@@ -56,7 +54,7 @@ const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCit
             {cities.loading ?
                 <LoadingModal></LoadingModal>
                 :
-                cities.cities ?
+                cities.cities && cities.cities.length > 0 ?
                     <div className="city-handler-body">
                         <div className="city-handler-body-title-container">
                             <span className="city-handler-body-title">városok</span>
@@ -68,8 +66,8 @@ const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCit
                                         <div key={city.id} className="city-handler-form-input-container">
                                             <input id={city.id}
                                                 className={
-                                                        selectedCity.id === city.id ? 
-                                                        `city-handler-form-input active-input ${toggleShake && "empty"}` 
+                                                    selectedCity.id === city.id ?
+                                                        `city-handler-form-input active-input ${toggleShake && "empty"}`
                                                         : `city-handler-form-input`
                                                 }
                                                 type="text"
@@ -80,6 +78,7 @@ const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCit
                                                         name: e.target.value,
                                                     })
                                                 }}
+
                                                 onFocus={(e) => {
                                                     e.target.value = (e.target.placeholder === city.name) ? city.name : e.target.placeholder
                                                     e.target.placeholder = ""
