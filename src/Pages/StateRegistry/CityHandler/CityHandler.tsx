@@ -67,10 +67,14 @@ const CityHandler = (props: any) => {
                                                     })
                                                 }}
                                                 onFocus={(e) => {
+                                                    if(e.target.placeholder === city.name){
+                                                        e.target.value = city.name
+                                                    }else{
+                                                        e.target.value = e.target.placeholder
+                                                    }
                                                     e.target.placeholder = ""
-                                                    e.target.value = city.name
                                                     setSelectedCity({
-                                                        ...selectedCity,
+                                                        name: e.target.value,
                                                         id: city.id,
                                                     })
                                                     setVisibleButtons(true)
