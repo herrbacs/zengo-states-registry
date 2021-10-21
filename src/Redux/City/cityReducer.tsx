@@ -45,13 +45,15 @@ const cityReducer = (state: any = initialState, action: any) => {
         case FETCH_CITIES_SUCCESS: {
             return {
                 ...state,
-                cities: action.payload
+                loading:false,
+                cities: action.payload,
             }
         }
         case FETCH_CITIES_ERROR: {
             return {
                 ...state,
-                fetchError: action.payload
+                loading:false,
+                fetchError: action.payload,
             }
         }
 
@@ -65,6 +67,7 @@ const cityReducer = (state: any = initialState, action: any) => {
         case DELETE_CITY_SUCCESS: {
             return {
                 ...state,
+                loading: false,
                 cities: state.cities.filter(
                     (city: City) => city.id !== action.payload)
             }
@@ -72,6 +75,7 @@ const cityReducer = (state: any = initialState, action: any) => {
         case DELETE_CITY_ERROR: {
             return {
                 ...state,
+                loading: false,
                 deleteError: action.payload
             }
         }
@@ -87,6 +91,7 @@ const cityReducer = (state: any = initialState, action: any) => {
         case UPDATE_CITY_SUCCESS: {
             return {
                 ...state,
+                loading: false,
                 cities: state.cities.map((city: City) => {
                     if (city.id === action.payload.id) {
                         return {
@@ -103,6 +108,7 @@ const cityReducer = (state: any = initialState, action: any) => {
         case UPDATE_CITY_ERROR: {
             return {
                 ...state,
+                loading: false,
                 deleteError: action.payload
             }
         }

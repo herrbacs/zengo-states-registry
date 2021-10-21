@@ -1,26 +1,27 @@
 .state-registry{
     width: 100%;
-    height: 100%;
+    height: auto;
+    margin: 1rem auto 1rem auto;
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
 
 .select-state-column{
     display: flex;
     flex-direction: column;
-    margin: auto;
     height: 100%;
-    margin: 1rem 0 auto 10rem;
+    margin: auto 0 auto auto;
 }
 
 .selected-state-container{
     margin: auto auto auto 0;
-    height: 100%;
     display: flex;
     width: 40rem;
+    height: 100%;
 }
-
 
 .no-selected-state-img{
     margin: 10rem auto auto 5rem;
+
 }

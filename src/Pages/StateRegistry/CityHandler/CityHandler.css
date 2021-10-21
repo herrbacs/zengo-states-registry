@@ -1,75 +1,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
-
-.city-handler{
+.city-handler {
+    position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    margin: 1rem auto auto 0;
+    margin: 0 auto 0 0;
     width: 100%;
     background-color: #fff;
     font-family: 'Titillium Web', sans-serif;
-
+    height: 100%;
 }
 
-.city-handler-header{
+.city-handler-header {
     background-color: rgba(177, 201, 255, .6);
     color: #4a82ff;
     display: flex;
     flex-direction: row;
 }
 
-.city-handler-header-title-container{
+.city-handler-header-title-container {
     display: flex;
     width: 13rem;
 }
 
-.city-handler-header-title{
+.city-handler-header-title {
     font-weight: 700;
     text-transform: uppercase;
     margin: auto 0 auto auto;
 }
 
-.city-handler-header-current-state-container{
+.city-handler-header-current-state-container {
     display: flex;
     width: 100%;
 }
 
-.city-handler-header-current-state{
+.city-handler-header-current-state {
     margin: 1.3rem auto 1.3rem 2rem;
-
 }
 
-.city-handler-body{
+.city-handler-body {
     height: 100%;
     display: flex;
     flex-direction: row;
+    overflow-x: none;
+    overflow-y: auto;
 }
 
-.city-handler-body-title-container{
+.city-handler-body-title-container {
     display: flex;
     width: 13rem;
     font-weight: 700;
 }
 
-.city-handler-body-title{
+.city-handler-body-title {
     color: #80b927;
     margin: 2rem 0 auto auto;
     text-transform: uppercase;
 }
 
-.city-handler-body-form-container{
+.city-handler-body-form-container {
     width: 100%;
 }
 
-.city-handler-body-form{
+.city-handler-body-form {
     margin: 1.7rem auto auto 0;
-    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-
 }
 
-.city-handler-form-input{
+.city-handler-form-input {
     width: 18rem;
     margin: auto .3rem auto 0;
     outline: 0;
@@ -81,31 +79,31 @@
     cursor: pointer;
 }
 
-.city-handler-form-input.active-input{
+.city-handler-form-input.active-input {
     border: 1px solid #181819;
 }
 
-.city-handler-form-input:hover{
+.city-handler-form-input:hover {
     border: 1px solid #ceceda;
 }
 
-.city-handler-form-input:focus{
+.city-handler-form-input:focus {
     border: 1px solid #181819;
 }
 
-.city-handler-form-input-container{
+.city-handler-form-input-container {
     margin-left: .5rem;
     display: flex;
     flex-direction: row;
 }
 
-.city-handler-form-buttons-container{
+.city-handler-form-buttons-container {
     display: flex;
     flex-direction: row;
 }
 
-.city-handler-form-button{
-    transition: transform .3s ease ;
+.city-handler-form-button {
+    transition: transform .3s ease;
     margin: 0 0 0 .4rem;
     width: 2rem;
     height: 2rem;
@@ -117,22 +115,43 @@
     border-radius: 6px;
 }
 
-.city-handler-form-button:hover{
+.city-handler-form-button:hover {
     transform: scale(1.1);
 }
 
-.button-icon{
+.button-icon {
     color: #fff;
 }
 
-.delete-button{
+.delete-button {
     background-color: #e85128;
-
 }
-.update-button{
+
+.update-button {
     background-color: #80ba27;
-
 }
-.cancel-button{
+
+.cancel-button {
     background-color: #9b9b9b;
+}
+
+.no-city-to-show {
+    margin: auto;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136.7);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

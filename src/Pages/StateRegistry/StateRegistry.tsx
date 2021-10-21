@@ -14,7 +14,6 @@ type StateRegistryProps = {
 
 
 const StateRegistry = ({ states }: StateRegistryProps) => {
-    console.log(states)
     return (
         <div className="state-registry">
             <div className="select-state-column">

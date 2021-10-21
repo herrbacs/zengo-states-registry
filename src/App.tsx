@@ -6,12 +6,12 @@ import { store } from './Redux/store';
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
+    <div className="App">
+      <Provider store={store}>
         <ZengoHeader></ZengoHeader>
         <StateRegistry></StateRegistry>
-      </div>
-    </Provider>
+      </Provider>
+    </div>
   );
 }
 

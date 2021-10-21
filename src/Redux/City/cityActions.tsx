@@ -30,7 +30,7 @@ export const uploadNewCityError = (error: String) => {
 export const uploadNewCity = (stateId: number, newCityName: String) => {
     return (dispatch: Function) => {
 
-        dispatch(uploadNewCityRequest)
+        dispatch(uploadNewCityRequest())
 
         const params = new URLSearchParams();
         params.append('name', newCityName.toString());
@@ -65,7 +65,7 @@ export const uploadNewCity = (stateId: number, newCityName: String) => {
 }
 
 
-//GET CITIES FROM API
+//FETCH CITIES FROM API
 export const fetchCitiesRequest = () => {
     return { type: FETCH_CITIES_REQUEST }
 }
@@ -78,7 +78,7 @@ export const fetchCitiesFailure = (error: any) => {
 export const fetchCities = (stateId: number) => {
     return (dispatch: Function) => {
 
-        dispatch(fetchCitiesRequest)
+        dispatch(fetchCitiesRequest())
 
         const form_data = new FormData();
         form_data.append('state_id', stateId.toString());
@@ -113,7 +113,7 @@ export const deleteCityFailure = (error: any) => {
 }
 export const deleteCity = (cityId: number) => {
     return (dispatch: Function) => {
-        dispatch(deleteCityRequest)
+        dispatch(deleteCityRequest())
 
         const params = new URLSearchParams();
         params.append('city_id', cityId.toString());
@@ -154,7 +154,7 @@ export const deleteCity = (cityId: number) => {
     }
     export const updateCity = (newName:String,cityId: number) => {
         return (dispatch: Function) => {
-            dispatch(updateCityRequest)
+            dispatch(updateCityRequest())
     
             const params = new URLSearchParams();
             params.append('city_id', cityId.toString());
