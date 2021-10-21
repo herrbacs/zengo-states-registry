@@ -1,4 +1,3 @@
-import { fetchCities } from "./cityActions"
 import {
     City,
     CityReducerState,

@@ -27,7 +27,10 @@ const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCit
     const updateCityAction = () => {
         if (selectedCity.name.length >= 3) {
             updateCity(selectedCity.id, selectedCity.name)
-
+            setSelectedCity({
+                id: -1,
+                name: ""
+            })
         } else {
             setToggleShake(true)
             setTimeout(() => {
