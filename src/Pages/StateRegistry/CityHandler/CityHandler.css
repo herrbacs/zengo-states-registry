@@ -79,6 +79,10 @@
     cursor: pointer;
 }
 
+.city-handler-form-input::placeholder{
+    color: #181819;
+}
+
 .city-handler-form-input.active-input {
     border: 1px solid #181819;
 }
@@ -91,8 +95,47 @@
     border: 1px solid #181819;
 }
 
+.city-handler-form-input.empty{
+    animation: shakeCityInput 500ms ease;
+}
+
+@keyframes shakeCityInput {
+    0% {
+        transform: translateX(0);
+    }
+    10% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+
+    30% {
+        transform: translateX(-.2rem) rotate(-1deg);
+
+    }
+
+    50% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+
+    70% {
+        transform: translateX(-.2rem) rotate(-1deg);
+
+    }
+
+    90% {
+        transform: translateX(.2rem) rotate(1deg);
+
+    }
+    100% {
+        transform: translateX(0);
+
+    }
+  }
+
+
 .city-handler-form-input-container {
-    margin-left: .5rem;
+    margin: .5rem;
     display: flex;
     flex-direction: row;
 }

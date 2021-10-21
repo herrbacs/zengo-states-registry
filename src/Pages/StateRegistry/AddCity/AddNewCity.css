@@ -38,20 +38,20 @@
     background: #fff;
     color: #181819;
     padding: .5rem;
-    font-style: italic;
     border: 1px solid #181819;
     text-align: center;
 }
 
 .add-new-city-form-input::placeholder {
     color: #afafb8;
+    font-style: italic;
 }
 
 .add-new-city-form-input.empty{
-    animation: shake 500ms ease;
+    animation: shakeNewCity 500ms ease;
 }
 
-@keyframes shake {
+@keyframes shakeNewCity {
     0% {
         transform: translateX(0);
     }

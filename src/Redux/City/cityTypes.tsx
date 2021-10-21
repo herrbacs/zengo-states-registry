@@ -14,6 +14,13 @@ export const UPDATE_CITY_REQUEST= "UPDATE_CITY_REQUEST"
 export const UPDATE_CITY_SUCCESS= "UPDATE_CITY_SUCCESS"
 export const UPDATE_CITY_ERROR= "UPDATE_CITY_ERROR"
 
+export type CityReducerState = {
+    loading: boolean,
+    cities: City[],
+    uploadError: String,
+    deleteError: String,
+    fetchError: String
+}
 
 export type UploadCity = {
     name:String,

@@ -4,35 +4,45 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { LoadingModal } from '../../../HelperComponents/LoadingModal/LoadingModal'
 import { deleteCity, fetchCities, updateCity } from '../../../Redux/City/cityActions'
+import { CityReducerState } from '../../../Redux/City/cityTypes'
+import { StateObject } from '../../../Redux/State/stateTypes'
 import './CityHandler.css'
 
 type CityHandlerProps = {
-    selectedState: Object,
+    selectedState: StateObject,
+    cities: CityReducerState,
     fetchCities: Function,
     deleteCity: Function,
     updateCity: Function,
-    cities: Object
 }
 
-const CityHandler = (props: any) => {
+const CityHandler = ({ cities, selectedState, fetchCities, deleteCity, updateCity }: CityHandlerProps) => {
+
     const [selectedCity, setSelectedCity] = useState({
         id: -1,
         name: ""
     })
-    const [visibleButtons, setVisibleButtons] = useState(false)
+    const [toggleShake, setToggleShake] = useState(false)
 
-    const removeCityAction = () => {
-        setVisibleButtons(false)
-        props.deleteCity(selectedCity.id)
-    }
     const updateCityAction = () => {
-        setVisibleButtons(false)
-        props.updateCity(selectedCity.id, selectedCity.name)
+        if(selectedCity.name.length >= 3) {
+            updateCity(selectedCity.id, selectedCity.name)
+            setSelectedCity({
+                ...selectedCity,
+                id: -1,
+            })
+        }else{
+            setToggleShake(true)
+            setTimeout(() => {
+                setToggleShake(false)
+            },600)
+        }
+
     }
 
     useEffect(() => {
-        props.fetchCities(props.selectedState.id)
-    }, [props.selectedState])
+        fetchCities(selectedState.id)
+    }, [selectedState])
     return (
         <div className="city-handler">
             <div className="city-handler-header">
@@ -40,13 +50,13 @@ const CityHandler = (props: any) => {
                     <span className="city-handler-header-title">megye</span>
                 </div>
                 <div className="city-handler-header-current-state-container">
-                    <span className="city-handler-header-current-state">{props.selectedState.name}</span>
+                    <span className="city-handler-header-current-state">{selectedState.name}</span>
                 </div>
             </div>
-            {props.cities.loading ?
+            {cities.loading ?
                 <LoadingModal></LoadingModal>
                 :
-                props.cities.cities ?
+                cities.cities ?
                     <div className="city-handler-body">
                         <div className="city-handler-body-title-container">
                             <span className="city-handler-body-title">városok</span>
@@ -54,10 +64,14 @@ const CityHandler = (props: any) => {
                         <div className="city-handler-body-form-container">
                             <form onSubmit={e => { e.preventDefault() }} className="city-handler-body-form">
                                 {
-                                    props.cities.cities.map((city: any) => (
+                                    cities.cities.map((city: any) => (
                                         <div key={city.id} className="city-handler-form-input-container">
                                             <input id={city.id}
-                                                className={(selectedCity.id === city.id && visibleButtons) ? "city-handler-form-input  active-input" : "city-handler-form-input"}
+                                                className={
+                                                        selectedCity.id === city.id ? 
+                                                        `city-handler-form-input active-input ${toggleShake && "empty"}` 
+                                                        : `city-handler-form-input`
+                                                }
                                                 type="text"
                                                 placeholder={city.name}
                                                 onChange={(e) => {
@@ -67,17 +81,12 @@ const CityHandler = (props: any) => {
                                                     })
                                                 }}
                                                 onFocus={(e) => {
-                                                    if(e.target.placeholder === city.name){
-                                                        e.target.value = city.name
-                                                    }else{
-                                                        e.target.value = e.target.placeholder
-                                                    }
+                                                    e.target.value = (e.target.placeholder === city.name) ? city.name : e.target.placeholder
                                                     e.target.placeholder = ""
                                                     setSelectedCity({
                                                         name: e.target.value,
                                                         id: city.id,
                                                     })
-                                                    setVisibleButtons(true)
                                                 }}
 
                                                 onBlur={(e) => {
@@ -85,16 +94,21 @@ const CityHandler = (props: any) => {
                                                     e.target.value = ""
                                                 }}
                                             />
-                                            {(selectedCity.id === city.id && visibleButtons) &&
+                                            {selectedCity.id === city.id &&
                                                 (
                                                     <div className="city-handler-form-buttons-container">
-                                                        <button onClick={() => { removeCityAction() }} className="city-handler-form-button delete-button">
+                                                        <button onClick={() => { deleteCity(selectedCity.id) }} className="city-handler-form-button delete-button">
                                                             <FontAwesomeIcon className="button-icon" icon={faTrash} />
                                                         </button>
                                                         <button onClick={() => { updateCityAction() }} className="city-handler-form-button update-button">
                                                             <FontAwesomeIcon className="button-icon" icon={faCheck} />
                                                         </button>
-                                                        <button onClick={() => { setVisibleButtons(false) }} className="city-handler-form-button cancel-button">
+                                                        <button onClick={() => {
+                                                            setSelectedCity({
+                                                                ...selectedCity,
+                                                                id: -1,
+                                                            })
+                                                        }} className="city-handler-form-button cancel-button">
                                                             <FontAwesomeIcon className="button-icon" icon={faTimes} />
                                                         </button>
                                                     </div>
@@ -106,7 +120,8 @@ const CityHandler = (props: any) => {
                             </form>
                         </div>
                     </div>
-                    : <h1 className="no-city-to-show">Nincs város felvéve a megyéhez</h1>}
+                    :
+                    <h1 className="no-city-to-show">Nincs város felvéve a megyéhez</h1>}
         </div>
     )
 }

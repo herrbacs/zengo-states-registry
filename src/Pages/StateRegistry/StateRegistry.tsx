@@ -11,8 +11,6 @@ type StateRegistryProps = {
     states: StatesStateType
 }
 
-
-
 const StateRegistry = ({ states }: StateRegistryProps) => {
     return (
         <div className="state-registry">

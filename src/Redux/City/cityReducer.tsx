@@ -1,4 +1,19 @@
-import { City, DELETE_CITY_ERROR, DELETE_CITY_REQUEST, DELETE_CITY_SUCCESS, FETCH_CITIES_ERROR, FETCH_CITIES_REQUEST, FETCH_CITIES_SUCCESS, UPDATE_CITY_ERROR, UPDATE_CITY_REQUEST, UPDATE_CITY_SUCCESS, UPLOAD_NEW_CITY_ERROR, UPLOAD_NEW_CITY_REQUEST, UPLOAD_NEW_CITY_SUCCESS } from "./cityTypes"
+import {
+    City,
+    CityReducerState,
+    DELETE_CITY_ERROR,
+    DELETE_CITY_REQUEST,
+    DELETE_CITY_SUCCESS,
+    FETCH_CITIES_ERROR,
+    FETCH_CITIES_REQUEST,
+    FETCH_CITIES_SUCCESS,
+    UPDATE_CITY_ERROR,
+    UPDATE_CITY_REQUEST,
+    UPDATE_CITY_SUCCESS,
+    UPLOAD_NEW_CITY_ERROR,
+    UPLOAD_NEW_CITY_REQUEST,
+    UPLOAD_NEW_CITY_SUCCESS
+} from "./cityTypes"
 
 const initialState = {
     loading: false,
@@ -8,7 +23,7 @@ const initialState = {
     fetchError: ""
 }
 
-const cityReducer = (state: any = initialState, action: any) => {
+const cityReducer = (state: CityReducerState = initialState, action: any) => {
     switch (action.type) {
         //UPLOAD NEW CITY AND SET IT
         case UPLOAD_NEW_CITY_REQUEST: {
@@ -21,6 +36,7 @@ const cityReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 loading: false,
+                uploadError: "",
                 cities: [
                     ...state.cities,
                     action.payload
@@ -45,14 +61,14 @@ const cityReducer = (state: any = initialState, action: any) => {
         case FETCH_CITIES_SUCCESS: {
             return {
                 ...state,
-                loading:false,
+                loading: false,
                 cities: action.payload,
             }
         }
         case FETCH_CITIES_ERROR: {
             return {
                 ...state,
-                loading:false,
+                loading: false,
                 fetchError: action.payload,
             }
         }
@@ -61,7 +77,8 @@ const cityReducer = (state: any = initialState, action: any) => {
         case DELETE_CITY_REQUEST: {
             return {
                 ...state,
-                loading: true
+                loading: true,
+                uploadError: "",
             }
         }
         case DELETE_CITY_SUCCESS: {
@@ -81,11 +98,11 @@ const cityReducer = (state: any = initialState, action: any) => {
         }
 
         //UPDATE CITY
-
         case UPDATE_CITY_REQUEST: {
             return {
                 ...state,
-                loading: true
+                loading: true,
+                uploadError: "",
             }
         }
         case UPDATE_CITY_SUCCESS: {
